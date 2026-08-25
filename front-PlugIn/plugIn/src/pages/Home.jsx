@@ -44,7 +44,13 @@ const highlights = [
 
 function Home() {
   return (
-    <div style={{ padding: "40px 24px", fontFamily: "Arial, sans-serif" }}>
+    <div style={{ padding: "40px 24px", fontFamily: "Arial, sans-serif"}}>
+      <p className="logout-container">
+        <a className="logout-button" href="/login">
+          <span aria-hidden="true">↪</span>
+          Cerrar sesión
+        </a>
+      </p>
       <section style={{ maxWidth: "720px", margin: "0 auto", textAlign: "center" }}>
         <h1>PlugIn</h1>
         <p style={{ fontSize: "18px", lineHeight: 1.6 }}>
