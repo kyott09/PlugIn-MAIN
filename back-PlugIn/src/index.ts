@@ -1,16 +1,15 @@
 import "dotenv/config";
 import "reflect-metadata";
 
-
 import express from "express";
+import cors from "cors";
 import { AppDataSource } from "./database/data-source.js";
 import userRoutes from "./modules/user/user.routes.js";
 
-
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use("/api/users", userRoutes);
-
 
 AppDataSource.initialize()
   .then(() => {
@@ -23,4 +22,3 @@ AppDataSource.initialize()
     console.error("Error al conectar:", err);
     process.exit(1);
   });
-
