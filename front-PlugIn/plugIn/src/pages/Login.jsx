@@ -4,8 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isLeaving, setIsLeaving] = useState(false);
 
   const navigate = useNavigate();
 
@@ -31,7 +33,9 @@ function Login() {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
-      navigate("/home");
+      setIsLeaving(true);
+      await new Promise((resolve) => setTimeout(resolve, 350));
+      navigate("/home", { viewTransition: true });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -40,59 +44,62 @@ function Login() {
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "360px",
-        margin: "60px auto",
-        padding: "20px",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <h1>Iniciar sesión</h1>
+    <div className={`auth-page${isLeaving ? " is-leaving" : ""}`}>
+      <section className="auth-card" aria-labelledby="login-title">
+        <div className="auth-card-header">
+          <h1 id="login-title">Iniciar sesión</h1>
+        </div>
+        <p className="auth-intro">Inicia sesión para comenzar</p>
 
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={{ padding: "10px", borderRadius: "6px", border: "1px solid var(--border)" }}
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={{ padding: "10px", borderRadius: "6px", border: "1px solid var(--border)" }}
-        />
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <label className="auth-field">
+            <span className="sr-only">Email</span>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <i className="fa-solid fa-envelope" aria-hidden="true"></i>
+          </label>
+          <label className="auth-field">
+            <span className="sr-only">Contraseña</span>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button
+              className="password-toggle"
+              type="button"
+              aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              onClick={() => setShowPassword((isVisible) => !isVisible)}
+            >
+              <i className={`fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"}`} aria-hidden="true"></i>
+            </button>
+          </label>
 
-        {error && <p style={{ color: "crimson", margin: 0 }}>{error}</p>}
+          <div className="auth-options">
+            <label className="remember-option">
+              <input type="checkbox" />
+              <span>Recuérdame</span>
+            </label>
+          </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            padding: "10px",
-            borderRadius: "6px",
-            border: "none",
-            background: "var(--accent, #aa3bff)",
-            color: "#fff",
-            fontWeight: 600,
-            cursor: "pointer",
-          }}
-        >
-          {loading ? "Ingresando..." : "Ingresar"}
-        </button>
-      </form>
+          {error && <p className="auth-error">{error}</p>}
 
-      <p style={{ marginTop: "16px" }}>
-        ¿No tenés cuenta?{" "}
-        <Link to="/register" style={{ color: "#2563eb", fontWeight: 600 }}>
-          Registrate
-        </Link>
-      </p>
+          <button className="auth-submit" type="submit" disabled={loading}>
+            {loading ? "Ingresando..." : "Ingresar"}
+          </button>
+        </form>
+
+        <p className="auth-footer">
+          ¿No tenés cuenta? <Link to="/register" viewTransition>Registrate</Link>
+        </p>
+      </section>
     </div>
   );
 }

@@ -2,8 +2,13 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
+  const [username, setUsername] = useState("");
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -12,6 +17,12 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    if (password !== confirmPassword) {
+      setError("Las contraseñas no coinciden");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -28,7 +39,7 @@ function Register() {
       }
 
       // El registro no devuelve token, así que mandamos al usuario a loguearse
-      navigate("/login");
+      navigate("/login", { viewTransition: true });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -37,60 +48,97 @@ function Register() {
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "360px",
-        margin: "60px auto",
-        padding: "20px",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <h1>Crear cuenta</h1>
+    <div className="auth-page">
+      <section className="auth-card auth-card-register" aria-labelledby="register-title">
+        <div className="auth-card-header">
+          <h1 id="register-title">Crear cuenta</h1>
+        </div>
+        <p className="auth-intro">Completa tus datos para registrarte</p>
 
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={{ padding: "10px", borderRadius: "6px", border: "1px solid var(--border)" }}
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          minLength={6}
-          style={{ padding: "10px", borderRadius: "6px", border: "1px solid var(--border)" }}
-        />
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <label className="auth-field">
+            <span className="sr-only">Usuario</span>
+            <input
+              type="text"
+              placeholder="Usuario"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            <i className="fa-solid fa-user" aria-hidden="true"></i>
+          </label>
+          <label className="auth-field">
+            <span className="sr-only">Nombre completo</span>
+            <input
+              type="text"
+              placeholder="Nombre completo"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              required
+            />
+            <i className="fa-solid fa-user" aria-hidden="true"></i>
+          </label>
+          <label className="auth-field">
+            <span className="sr-only">Email</span>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <i className="fa-solid fa-envelope" aria-hidden="true"></i>
+          </label>
+          <label className="auth-field">
+            <span className="sr-only">Contraseña</span>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              minLength={6}
+            />
+            <button
+              className="password-toggle"
+              type="button"
+              aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+              onClick={() => setShowPassword((isVisible) => !isVisible)}
+            >
+              <i className={`fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"}`} aria-hidden="true"></i>
+            </button>
+          </label>
+          <label className="auth-field">
+            <span className="sr-only">Confirmar contraseña</span>
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              placeholder="Confirmar contraseña"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              minLength={6}
+            />
+            <button
+              className="password-toggle"
+              type="button"
+              aria-label={showConfirmPassword ? "Ocultar confirmación de contraseña" : "Mostrar confirmación de contraseña"}
+              onClick={() => setShowConfirmPassword((isVisible) => !isVisible)}
+            >
+              <i className={`fa-solid ${showConfirmPassword ? "fa-eye-slash" : "fa-eye"}`} aria-hidden="true"></i>
+            </button>
+          </label>
 
-        {error && <p style={{ color: "crimson", margin: 0 }}>{error}</p>}
+          {error && <p className="auth-error">{error}</p>}
 
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            padding: "10px",
-            borderRadius: "6px",
-            border: "none",
-            background: "var(--accent, #aa3bff)",
-            color: "#fff",
-            fontWeight: 600,
-            cursor: "pointer",
-          }}
-        >
-          {loading ? "Creando cuenta..." : "Registrarme"}
-        </button>
-      </form>
+          <button className="auth-submit" type="submit" disabled={loading}>
+            {loading ? "Creando cuenta..." : "Registrarme"}
+          </button>
+        </form>
 
-      <p style={{ marginTop: "16px" }}>
-        ¿Ya tenés cuenta?{" "}
-        <Link to="/login" style={{ color: "#2563eb", fontWeight: 600 }}>
-          Iniciá sesión
-        </Link>
-      </p>
+        <p className="auth-footer">
+          ¿Ya tenés cuenta? <Link to="/login" viewTransition>Iniciá sesión</Link>
+        </p>
+      </section>
     </div>
   );
 }

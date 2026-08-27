@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const services = [
@@ -42,16 +43,101 @@ const highlights = [
   },
 ];
 
+const navigationSections = [
+  {
+    title: "Registrar",
+    icon: "fa-file-signature",
+    active: true,
+    expandable: true,
+    items: [
+      { label: "Vehículo", icon: "fa-car", href: "/vehiculos" },
+      { label: "Empleado", icon: "fa-users", href: "/empleados" },
+      { label: "Tarea", icon: "fa-list-check", href: "/tareas" },
+      { label: "Roles", icon: "fa-lock", href: "/roles" },
+    ],
+  },
+  {
+    title: "Otros",
+    items: [
+      { label: "Calendario", icon: "fa-calendar-days", href: "/calendario" },
+      { label: "Galería de Fotos", icon: "fa-image", href: "/galeria" },
+    ],
+  },
+  {
+    title: "Información General",
+    items: [{ label: "Documentación", icon: "fa-file", href: "/documentacion" }],
+  },
+];
+
+function DashboardSidebar() {
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+
+  return (
+    <aside className="dashboard-sidebar" aria-label="Navegación principal">
+      <Link className="sidebar-brand" to="/home">
+        <span className="sidebar-brand-mark" aria-hidden="true">
+          <i className="fa-solid fa-play"></i>
+        </span>
+        <span>PlugIn</span>
+      </Link>
+      <br></br>
+      <nav className="sidebar-navigation">
+        {navigationSections.map((section) => (
+          <div className="sidebar-section" key={section.title}>
+            {section.expandable ? (
+              <button
+                className={`sidebar-section-heading sidebar-section-button${section.active ? " is-active" : ""}`}
+                type="button"
+                aria-expanded={isRegisterOpen}
+                onClick={() => setIsRegisterOpen((isOpen) => !isOpen)}
+              >
+                <i className={`fa-solid ${section.icon}`} aria-hidden="true"></i>
+                <span>{section.title}</span>
+                <i
+                  className={`fa-solid fa-chevron-down sidebar-chevron${isRegisterOpen ? " is-open" : ""}`}
+                  aria-hidden="true"
+                ></i>
+              </button>
+            ) : (
+              <div className="sidebar-section-heading">
+                <span>{section.title}</span>
+              </div>
+            )}
+            {(!section.expandable || isRegisterOpen) && <div className="sidebar-section-items">
+              {section.items.map((item) => (
+                <Link className="sidebar-link" to={item.href} key={item.label}>
+                  <i className={`fa-solid ${item.icon}`} aria-hidden="true"></i>
+                  <span>{item.label}</span>
+                </Link>
+              ))}
+            </div>}
+          </div>
+        ))}
+      </nav>
+    </aside>
+  );
+}
+
 function Home() {
   return (
-    <div style={{ padding: "40px 24px", fontFamily: "Arial, sans-serif"}}>
-      <p className="logout-container">
-        <a className="logout-button" href="/login">
-          <span aria-hidden="true">↪</span>
-          Cerrar sesión
-        </a>
-      </p>
-      <section style={{ maxWidth: "720px", margin: "0 auto", textAlign: "center" }}>
+    <div className="dashboard-layout">
+      <DashboardSidebar />
+      <main className="dashboard-content">
+        <div className="account-actions">
+          <p className="profile-container">
+            <a className="profile-button" href="/profile">
+              <i className="fa-solid fa-user" aria-hidden="true"></i>
+              Perfil
+            </a>
+          </p>
+          <p className="logout-container">
+            <a className="logout-button" href="/login">
+              <span aria-hidden="true">➜]</span>
+              Cerrar sesión
+            </a>
+          </p>
+        </div>
+        <section style={{ maxWidth: "720px", margin: "0 auto", textAlign: "center" }}>
         <h1>PlugIn</h1>
         <p style={{ fontSize: "18px", lineHeight: 1.6 }}>
           PlugIn es una contratista dedicada a brindar servicio de internet por cable a clientes
@@ -59,7 +145,7 @@ function Home() {
           planificación de trabajos, el control de stock y vehículos, y la gestión de personal, para
           reemplazar los procesos en papel por un sistema con trazabilidad completa.
         </p>
-      </section>
+        </section>
 
       <section style={{ maxWidth: "900px", margin: "48px auto 0" }}>
         <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Qué gestiona el sistema</h2>
@@ -102,8 +188,8 @@ function Home() {
             <div
               key={service.title}
               style={{
-                background: "var(--accent-bg, rgba(170, 59, 255, 0.1))",
-                border: "1px solid var(--accent-border, rgba(170, 59, 255, 0.5))",
+                background: "var(--accent-bg, rgba(255, 255, 255, 0.1))",
+                border: "1px solid var(--accent-border, rgba(255, 255, 255, 0.5))",
                 borderRadius: "10px",
                 padding: "16px",
               }}
@@ -116,12 +202,7 @@ function Home() {
           ))}
         </div>
       </section>
-
-      <section style={{ textAlign: "center", marginTop: "48px" }}>
-        <Link to="/users" style={{ color: "#2563eb", fontWeight: 600 }}>
-          Ver lista de usuarios
-        </Link>
-      </section>
+      </main>
     </div>
   );
 }
