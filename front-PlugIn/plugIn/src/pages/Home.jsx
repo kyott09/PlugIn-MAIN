@@ -78,7 +78,7 @@ function DashboardSidebar() {
         <span className="sidebar-brand-mark" aria-hidden="true">
           <i className="fa-solid fa-play"></i>
         </span>
-        <span>PlugIn</span>
+        <span>Asiinet</span>
       </Link>
       <br></br>
       <nav className="sidebar-navigation">
@@ -138,9 +138,9 @@ function Home() {
           </p>
         </div>
         <section style={{ maxWidth: "720px", margin: "0 auto", textAlign: "center" }}>
-        <h1>PlugIn</h1>
+        <h1>Asiinet</h1>
         <p style={{ fontSize: "18px", lineHeight: 1.6 }}>
-          PlugIn es una contratista dedicada a brindar servicio de internet por cable a clientes
+          Asiinet es una contratista dedicada a brindar servicio de internet por cable a clientes
           residenciales y comerciales. Este panel centraliza la recepción de pedidos, la
           planificación de trabajos, el control de stock y vehículos, y la gestión de personal, para
           reemplazar los procesos en papel por un sistema con trazabilidad completa.
@@ -160,10 +160,12 @@ function Home() {
             <div
               key={item.title}
               style={{
-                border: "1px solid var(--border, #e5e4e7)",
-                borderRadius: "10px",
+                border: "1px solid #13110F",
+                borderRadius: "12px",
                 padding: "18px",
                 textAlign: "left",
+                background: "linear-gradient(180deg, #fff 0%, rgba(246, 92, 23, 0.06) 100%)",
+                boxShadow: "0 10px 22px rgba(19, 17, 15, 0.04)",
               }}
             >
               <h3 style={{ margin: "0 0 8px", fontSize: "17px", color: "var(--text-h, #08060d)" }}>
@@ -188,10 +190,11 @@ function Home() {
             <div
               key={service.title}
               style={{
-                background: "var(--accent-bg, rgba(255, 255, 255, 0.1))",
-                border: "1px solid var(--accent-border, rgba(255, 255, 255, 0.5))",
-                borderRadius: "10px",
+                background: "linear-gradient(135deg, rgba(246, 92, 23, 0.12) 0%, #fff 100%)",
+                border: "1px solid #13110F",
+                borderRadius: "12px",
                 padding: "16px",
+                boxShadow: "0 8px 18px rgba(246, 92, 23, 0.08)",
               }}
             >
               <h3 style={{ margin: "0 0 6px", fontSize: "16px", color: "var(--text-h, #08060d)" }}>

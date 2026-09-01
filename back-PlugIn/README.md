@@ -28,8 +28,8 @@ Editar `.env` con tus valores:
 
 ```env
 # Base de datos
-DATABASE_URL=postgresql://usuario:password@localhost:5432/plugin_db
-DB_NAME=plugin_db
+DATABASE_URL=postgresql://usuario:password@localhost:5432/asiinet_db
+DB_NAME=asiinet_db
 
 # Servidor
 PORT=5000
@@ -74,7 +74,7 @@ npm start
 ## 📂 Estructura del Proyecto
 
 ```
-api-plugIn/
+api-asiinet/
 ├── src/
 │   ├── routes/              # Rutas/endpoints
 │   ├── controllers/         # Lógica de negocio
@@ -290,8 +290,8 @@ PORT=5000
 NODE_ENV=development
 
 # Base de Datos PostgreSQL
-DATABASE_URL=postgresql://user:password@localhost:5432/plugin_db
-DB_NAME=plugin_db
+DATABASE_URL=postgresql://user:password@localhost:5432/asiinet_db
+DB_NAME=asiinet_db
 DB_HOST=localhost
 DB_PORT=5432
 DB_USER=postgres

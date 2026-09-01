@@ -25,7 +25,7 @@ Aplicación web moderna con React 19, Vite, TailwindCSS y gestión de estado con
 ### 1. Instalar dependencias
 
 ```bash
-cd app-plugIn/plugIn
+cd app-asiinet/asiinet
 npm install
 ```
 
@@ -35,7 +35,7 @@ Copiar `.env.example` a `.env.local` (si existe):
 
 ```env
 VITE_API_URL=http://localhost:5000/api
-VITE_APP_NAME=PlugIn App
+VITE_APP_NAME=Asiinet App
 ```
 
 ### 3. Iniciar servidor de desarrollo
@@ -342,7 +342,7 @@ VITE_API_URL=http://localhost:5000/api
 VITE_API_TIMEOUT=10000
 
 # App
-VITE_APP_NAME=PlugIn
+VITE_APP_NAME=Asiinet
 VITE_APP_VERSION=1.0.0
 
 # Features
@@ -393,7 +393,7 @@ npm install
 ### Error: `CORS error`
 ```bash
 # Backend debe permitir localhost:5173
-# En api-plugIn .env: ALLOWED_ORIGINS=http://localhost:5173
+# En api-asiinet .env: ALLOWED_ORIGINS=http://localhost:5173
 ```
 
 ## 📚 Recursos Útiles

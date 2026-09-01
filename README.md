@@ -1,4 +1,4 @@
-# PlugIn Project 🔌
+# Asiinet Project 🔌
 
 Proyecto fullstack moderno con arquitectura escalable basada en **Node.js + Express** para el backend y **React + Vite** para el frontend.
 
@@ -12,14 +12,14 @@ Este es un proyecto monorepo que contiene dos aplicaciones principales:
 ## 🏗️ Estructura del Proyecto
 
 ```
-PlugIn-MAIN/
-├── api-plugIn/          # Backend API (Express + Prisma + JWT)
+Asiinet-MAIN/
+├── api-asiinet/          # Backend API (Express + Prisma + JWT)
 │   ├── src/
 │   ├── package.json
 │   ├── .env_example
 │   └── README.md
-├── app-plugIn/          # Frontend (React + Vite)
-│   ├── plugIn/
+├── app-asiinet/          # Frontend (React + Vite)
+│   ├── asiinet/
 │   ├── package.json
 │   └── README.md
 └── README.md            # Este archivo
@@ -30,7 +30,7 @@ PlugIn-MAIN/
 ### Backend (API)
 
 ```bash
-cd api-plugIn
+cd api-asiinet
 cp .env_example .env
 npm install
 npm start  # o npm run dev
@@ -41,7 +41,7 @@ npm start  # o npm run dev
 ### Frontend (React)
 
 ```bash
-cd app-plugIn/plugIn
+cd app-asiinet/asiinet
 npm install
 npm run dev
 ```
@@ -75,16 +75,16 @@ Copiar `.env_example` a `.env` y completar:
 
 ```env
 PORT=5000
-DATABASE_URL=postgresql://user:password@localhost:5432/plugin_db
-DB_NAME=plugin_db
+DATABASE_URL=postgresql://user:password@localhost:5432/asiinet_db
+DB_NAME=asiinet_db
 JWT_SECRET=tu_secreto_super_seguro_aqui
 ```
 
 ## 📖 Documentación
 
-- [Backend Documentation](./api-plugIn/README.md)
-- [Frontend Documentation](./app-plugIn/README.md)
-- [App Vite Documentation](./app-plugIn/plugIn/README.md)
+- [Backend Documentation](./api-asiinet/README.md)
+- [Frontend Documentation](./app-asiinet/README.md)
+- [App Vite Documentation](./app-asiinet/asiinet/README.md)
 
 ## 🎨 Convenciones de Código
 
@@ -126,13 +126,13 @@ class AuthService { }
 
 ### Backend
 ```bash
-cd api-plugIn
+cd api-asiinet
 npm test
 ```
 
 ### Frontend
 ```bash
-cd app-plugIn/plugIn
+cd app-asiinet/asiinet
 npm test
 ```
 

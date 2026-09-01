@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import logoAsiinet from "../assets/brand/images/ASIINET.png";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -46,6 +47,9 @@ function Login() {
   return (
     <div className={`auth-page${isLeaving ? " is-leaving" : ""}`}>
       <section className="auth-card" aria-labelledby="login-title">
+        <div className="auth-brand-wrap">
+          <img src={logoAsiinet} alt="Asiinet" className="auth-brand-logo" />
+        </div>
         <div className="auth-card-header">
           <h1 id="login-title">Iniciar sesión</h1>
         </div>

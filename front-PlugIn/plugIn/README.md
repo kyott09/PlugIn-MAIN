@@ -4,7 +4,7 @@ Aplicación web moderna basada en React 19 y Vite, optimizada para desarrollo r�
 
 ## 📋 Descripción
 
-Esta es la interfaz de usuario del proyecto PlugIn. Utiliza:
+Esta es la interfaz de usuario del proyecto Asiinet. Utiliza:
 - **React 19** para componentes interactivos
 - **Vite** para un desarrollo ultrarrápido con HMR (Hot Module Replacement)
 - **ESLint** para mantener código limpio y consistente
