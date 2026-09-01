@@ -1,47 +1,61 @@
 # Asiinet Project 🔌
 
-Proyecto fullstack moderno con arquitectura escalable basada en **Node.js + Express** para el backend y **React + Vite** para el frontend.
+Proyecto fullstack con una arquitectura modular para un sistema de gestión de usuarios y autenticación, desarrollada con **Node.js + Express** en el backend y **React + Vite** en el frontend.
 
 ## 📋 Descripción General
 
-Este es un proyecto monorepo que contiene dos aplicaciones principales:
+Este monorepo incluye dos aplicaciones principales:
 
-- **API Backend**: Servidor REST con Express, Prisma ORM, autenticación JWT y validación con Zod
-- **Frontend**: Aplicación web moderna con React 19, Vite, TailwindCSS y manejo de estado con Zustand
+- **Backend**: API REST desarrollada con Express, TypeScript, TypeORM, JWT y validación con Zod.
+- **Frontend**: Aplicación web en React con Vite, enrutamiento con React Router y estructura de páginas y componentes para la interfaz de usuario.
 
 ## 🏗️ Estructura del Proyecto
 
-```
+```bash
 Asiinet-MAIN/
-├── api-asiinet/          # Backend API (Express + Prisma + JWT)
+├── back-asiinet/                  # Backend API
 │   ├── src/
-│   ├── package.json
+│   ├── .env
 │   ├── .env_example
-│   └── README.md
-├── app-asiinet/          # Frontend (React + Vite)
-│   ├── asiinet/
 │   ├── package.json
+│   ├── tsconfig.json
 │   └── README.md
-└── README.md            # Este archivo
+├── front-asiinet/                # Frontend app
+│   ├── asiinet/
+│   │   ├── src/
+│   │   ├── public/
+│   │   ├── package.json
+│   │   ├── vite.config.js
+│   │   ├── eslint.config.js
+│   │   └── README.md
+│   └── (README-no listo).md
+├── package-lock.json
+└── README.md                     # Este archivo
 ```
 
-## 🚀 Quick Start
+## 🚀 Inicio Rápido
 
-### Backend (API)
+### Backend
 
 ```bash
-cd api-asiinet
+cd back-asiinet
 cp .env_example .env
 npm install
-npm start  # o npm run dev
+npm run dev
 ```
 
-**Puerto por defecto**: `5000` (configurable en `.env`)
-
-### Frontend (React)
+O, si prefieres iniciar directamente:
 
 ```bash
-cd app-asiinet/asiinet
+npm start
+```
+
+**Puerto por defecto**: `8080` (configurable desde `.env`)
+
+### Frontend
+
+```bash
+cd front-asiinet/asiinet
 npm install
 npm run dev
 ```
@@ -51,109 +65,81 @@ npm run dev
 ## 📦 Tecnologías Principales
 
 ### Backend
-- **Express** - Framework web minimalista
-- **Prisma** - ORM para base de datos
+- **Node.js** - Entorno de ejecución del servidor
+- **Express** - Framework web para APIs
+- **TypeScript** - Tipado estático para JavaScript
+- **TypeORM** - ORM para conexión con bases de datos relacionales
+- **MySQL** - Base de datos principal
 - **JWT** - Autenticación basada en tokens
-- **Zod** - Validación de esquemas TypeScript-safe
+- **Zod** - Validación de datos y esquemas
 - **CORS** - Control de acceso entre dominios
-- **Nodemon** - Recarga automática en desarrollo
+- **Nodemon** - Reinicio automático en desarrollo
 
 ### Frontend
-- **React 19** - Librería UI moderna
-- **Vite** - Bundler ultrarrápido
-- **TailwindCSS** - Framework de CSS utilitario
-- **Zustand** - Manejo de estado global ligero
-- **Axios** - Cliente HTTP
-- **React Router** - Navegación entre rutas
-- **Yup** - Validación de formularios
+- **React 19** - Biblioteca para interfaces de usuario
+- **Vite** - Herramienta rápida de desarrollo y build
+- **React Router DOM** - Enrutamiento de la aplicación
+- **ESLint** - Linting del código
+- **Font Awesome** - Iconografía
+- **CSS modular / estilos básicos** - Personalización visual de la interfaz
 
-## 🔧 Configuración
+## 🔧 Configuración de Variables de Entorno
 
-### Variables de Entorno Backend
-
-Copiar `.env_example` a `.env` y completar:
+Se debe crear un archivo `.env` a partir de `.env_example` dentro de `back-asiinet`.
 
 ```env
-PORT=5000
-DATABASE_URL=postgresql://user:password@localhost:5432/asiinet_db
-DB_NAME=asiinet_db
-JWT_SECRET=tu_secreto_super_seguro_aqui
+PORT=8080
+SECRET_KEY=mi_clave_secreta
+
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=empresa_db
+DB_USER=root
+DB_PASS=
+
+JWT_SECRET=1234
+JWT_EXPIRES_IN=1h
 ```
 
 ## 📖 Documentación
 
-- [Backend Documentation](./api-asiinet/README.md)
-- [Frontend Documentation](./app-asiinet/README.md)
-- [App Vite Documentation](./app-asiinet/asiinet/README.md)
+- [Backend README](./back-asiinet/README.md)
+- [Frontend README](./front-asiinet/asiinet/README.md)
 
-## 🎨 Convenciones de Código
+## 🧩 Funcionalidades
 
-### Variables y Funciones
-```javascript
-const userId = 123;
-function getUserData() { }
-const handleSubmit = () => { };
-```
-
-### Componentes React
-```jsx
-function UserCard() { }
-const LoginForm = () => { };
-```
-
-### Clases CSS
-```css
-.user-card { }
-.login-form { }
-.btn-primary { }
-```
-
-### Modelos/Clases Backend
-```javascript
-class UserModel { }
-class AuthService { }
-```
+- Registro y gestión de usuarios
+- Autenticación con JWT
+- Conexión a base de datos relacional con TypeORM
+- Estructura modular en rutas, servicios y entidades
+- Interfaz de usuario con páginas para autenticación y administración
 
 ## 🔐 Seguridad
 
-- ✅ Autenticación con JWT
-- ✅ Validación de entrada con Zod
-- ✅ CORS configurado
+- ✅ Autenticación basada en JWT
+- ✅ Validación de entradas con Zod
+- ✅ CORS habilitado para llamadas HTTP desde el frontend
 - ✅ Variables de entorno protegidas
-- ✅ Hash de contraseñas (Bcrypt recomendado)
-
-## 🧪 Testing
-
-### Backend
-```bash
-cd api-asiinet
-npm test
-```
-
-### Frontend
-```bash
-cd app-asiinet/asiinet
-npm test
-```
+- ✅ Uso de contraseñas con hash mediante bcrypt en el backend
 
 ## 📝 Scripts Disponibles
 
 ### Backend
-- `npm start` - Inicia el servidor en producción
-- `npm run dev` - Inicia con nodemon para desarrollo
+- `npm run dev` - Inicia la API en modo desarrollo con nodemon
+- `npm start` - Ejecuta la aplicación con TypeScript directo
 
 ### Frontend
-- `npm run dev` - Servidor de desarrollo con HMR
-- `npm run build` - Build optimizado para producción
-- `npm run preview` - Previsualiza el build
-- `npm run lint` - Ejecuta ESLint
+- `npm run dev` - Levanta el servidor de desarrollo de Vite
+- `npm run build` - Genera la build de producción
+- `npm run preview` - Previsualiza la aplicación compilada
+- `npm run lint` - Ejecuta ESLint para revisar el código
 
 ## 🤝 Contribuir
 
-1. Crear una rama feature: `git checkout -b feature/nombre`
-2. Commit cambios: `git commit -m 'feat: descripción'`
-3. Push a la rama: `git push origin feature/nombre`
-4. Abrir Pull Request
+1. Crear una rama para la funcionalidad: `git checkout -b feature/nombre`
+2. Realizar los cambios y confirmar con commit: `git commit -m "feat: descripción"`
+3. Subir la rama: `git push origin feature/nombre`
+4. Abrir un Pull Request para revisión
 
 ## 📄 Licencia
 
@@ -165,4 +151,4 @@ Tobía - 2026
 
 ---
 
-**Última actualización**: 09 de Junio, 2026
+Última actualización: 01 de Septiembre de 2026

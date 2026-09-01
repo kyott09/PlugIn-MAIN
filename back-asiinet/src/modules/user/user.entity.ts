@@ -19,6 +19,10 @@ export class User {
   passwordHash!: string;
 
 
+  @Column({ type: "varchar", default: "user" })
+  role!: string;
+
+
   @CreateDateColumn()
   creadoEn!: Date;
 }

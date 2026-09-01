@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import logoAsiinet from "../assets/brand/images/logo-login-sinfondo.png";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -28,8 +29,9 @@ function Register() {
     try {
       const response = await fetch("http://localhost:8080/api/users/register", {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, role: "user" }),
       });
 
       const data = await response.json();
@@ -49,11 +51,15 @@ function Register() {
 
   return (
     <div className="auth-page">
-      <section className="auth-card auth-card-register" aria-labelledby="register-title">
+      <section className="auth-card" aria-labelledby="register-title">
+        <div className="auth-brand-wrap">
+          <img src={logoAsiinet} alt="Asiinet" className="auth-brand-logo" />
+        </div>
+
         <div className="auth-card-header">
           <h1 id="register-title">Crear cuenta</h1>
+          <p className="auth-subtitle">Completá tus datos para registrarte</p>
         </div>
-        <p className="auth-intro">Completa tus datos para registrarte</p>
 
         <form className="auth-form" onSubmit={handleSubmit}>
           <label className="auth-field">
@@ -65,8 +71,8 @@ function Register() {
               onChange={(e) => setUsername(e.target.value)}
               required
             />
-            <i className="fa-solid fa-user" aria-hidden="true"></i>
           </label>
+
           <label className="auth-field">
             <span className="sr-only">Nombre completo</span>
             <input
@@ -76,20 +82,20 @@ function Register() {
               onChange={(e) => setFullName(e.target.value)}
               required
             />
-            <i className="fa-solid fa-user" aria-hidden="true"></i>
           </label>
+
           <label className="auth-field">
             <span className="sr-only">Email</span>
             <input
               type="email"
-              placeholder="Email"
+              placeholder="Correo electrónico"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <i className="fa-solid fa-envelope" aria-hidden="true"></i>
           </label>
-          <label className="auth-field">
+
+          <label className="auth-field auth-field-password">
             <span className="sr-only">Contraseña</span>
             <input
               type={showPassword ? "text" : "password"}
@@ -108,7 +114,8 @@ function Register() {
               <i className={`fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"}`} aria-hidden="true"></i>
             </button>
           </label>
-          <label className="auth-field">
+
+          <label className="auth-field auth-field-password">
             <span className="sr-only">Confirmar contraseña</span>
             <input
               type={showConfirmPassword ? "text" : "password"}

@@ -3,23 +3,22 @@ import jwt from "jsonwebtoken";
 import * as userRepository from "./user.repository.js";
 
 
-export const register = async (email: string, password: string) => {
+export const register = async (email: string, password: string, role: string = "user") => {
   //Buscar usuario por email
   const existing = await userRepository.findByEmail(email);
   if (existing) throw new Error("El usuario ya existe");
 
-
+  const normalizedRole = role === "admin" ? "admin" : "user";
   const passwordHash = await bcrypt.hash(password, 10);
 
-
-  return userRepository.createUser({ email, passwordHash });
+  return userRepository.createUser({ email, passwordHash, role: normalizedRole });
 };
 
 
 export const login = async (email: string, password: string) => {
   //Buscar usuario por email
   const user = await userRepository.findByEmail(email);
- 
+
   if (!user) {
     throw new Error("Credenciales iválidas");
   }
@@ -46,6 +45,7 @@ export const login = async (email: string, password: string) => {
     {
       id: user.id,
       email: user.email,
+      role: user.role || "user",
     },
     jwtSecret,
     {
@@ -60,9 +60,10 @@ export const login = async (email: string, password: string) => {
     user: {
       id: user.id,
       email: user.email,
+      role: user.role || "user",
     },
   };
- 
+
 };
 
 

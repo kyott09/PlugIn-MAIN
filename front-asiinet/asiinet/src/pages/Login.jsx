@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logoAsiinet from "../assets/brand/images/ASIINET.png";
+import logoAsiinet from "../assets/brand/images/logo-login-sinfondo.png";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -20,6 +20,7 @@ function Login() {
     try {
       const response = await fetch("http://localhost:8080/api/users/login", {
         method: "POST",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
@@ -30,9 +31,8 @@ function Login() {
         throw new Error(data.message || "Error al iniciar sesión");
       }
 
-      // se guarda el token y usuario para usarlos en el resto de la app
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+      // se guarda solo la información del usuario para la vista, mientras el token queda en cookie HttpOnly
+      sessionStorage.setItem("user", JSON.stringify(data.user));
 
       setIsLeaving(true);
       await new Promise((resolve) => setTimeout(resolve, 350));
@@ -48,26 +48,33 @@ function Login() {
     <div className={`auth-page${isLeaving ? " is-leaving" : ""}`}>
       <section className="auth-card" aria-labelledby="login-title">
         <div className="auth-brand-wrap">
-          <img src={logoAsiinet} alt="Asiinet" className="auth-brand-logo" />
+          <img src={logoAsiinet} alt="Asii  net" className="auth-brand-logo" />
         </div>
+
         <div className="auth-card-header">
           <h1 id="login-title">Iniciar sesión</h1>
+          <p className="auth-subtitle">Usá tu cuenta de Asiinet</p>
         </div>
-        <p className="auth-intro">Inicia sesión para comenzar</p>
 
         <form className="auth-form" onSubmit={handleSubmit}>
           <label className="auth-field">
             <span className="sr-only">Email</span>
             <input
               type="email"
-              placeholder="Email"
+              placeholder="Correo electrónico"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <i className="fa-solid fa-envelope" aria-hidden="true"></i>
           </label>
-          <label className="auth-field">
+        {/*
+          <div className="auth-helper-row">
+            <Link to="/register" className="auth-link muted-link" viewTransition>
+              ¿Olvidaste tu contraseña?
+            </Link>
+          </div>
+          */}
+          <label className="auth-field auth-field-password">
             <span className="sr-only">Contraseña</span>
             <input
               type={showPassword ? "text" : "password"}
@@ -96,12 +103,12 @@ function Login() {
           {error && <p className="auth-error">{error}</p>}
 
           <button className="auth-submit" type="submit" disabled={loading}>
-            {loading ? "Ingresando..." : "Ingresar"}
+            {loading ? "Ingresando..." : "Siguiente"}
           </button>
         </form>
 
         <p className="auth-footer">
-          ¿No tenés cuenta? <Link to="/register" viewTransition>Registrate</Link>
+          ¿Es nuevo en Asiinet? <Link to="/register" viewTransition>Crear una cuenta</Link>
         </p>
       </section>
     </div>

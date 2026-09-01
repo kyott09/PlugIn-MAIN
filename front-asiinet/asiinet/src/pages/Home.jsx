@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const services = [
   {
@@ -69,8 +69,45 @@ const navigationSections = [
   },
 ];
 
+function getUserSession() {
+  try {
+    const raw = sessionStorage.getItem("user");
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
 function DashboardSidebar() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const user = useMemo(() => getUserSession(), []);
+  const isAdmin = user?.role === "admin";
+
+  const navigationSections = [
+    {
+      title: "Registrar",
+      icon: "fa-file-signature",
+      active: true,
+      expandable: true,
+      items: [
+        { label: "Vehículo", icon: "fa-car", href: "/vehiculos" },
+        { label: "Empleado", icon: "fa-users", href: "/empleados" },
+        { label: "Tarea", icon: "fa-list-check", href: "/tareas" },
+        ...(isAdmin ? [{ label: "Roles", icon: "fa-lock", href: "/roles" }] : []),
+      ],
+    },
+    {
+      title: "Otros",
+      items: [
+        { label: "Calendario", icon: "fa-calendar-days", href: "/calendario" },
+        { label: "Galería de Fotos", icon: "fa-image", href: "/galeria" },
+      ],
+    },
+    {
+      title: "Información General",
+      items: [{ label: "Documentación", icon: "fa-file", href: "/documentacion" }],
+    },
+  ];
 
   return (
     <aside className="dashboard-sidebar" aria-label="Navegación principal">
@@ -119,6 +156,15 @@ function DashboardSidebar() {
 }
 
 function Home() {
+  const navigate = useNavigate();
+  const user = getUserSession();
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("user");
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    navigate("/login");
+  };
+
   return (
     <div className="dashboard-layout">
       <DashboardSidebar />
@@ -127,14 +173,14 @@ function Home() {
           <p className="profile-container">
             <a className="profile-button" href="/profile">
               <i className="fa-solid fa-user" aria-hidden="true"></i>
-              Perfil
+              {user?.email || "Usuario"}
             </a>
           </p>
           <p className="logout-container">
-            <a className="logout-button" href="/login">
-              <span aria-hidden="true">➜]</span>
+            <button type="button" className="logout-button" onClick={handleLogout}>
+              <span aria-hidden="true">➜</span>
               Cerrar sesión
-            </a>
+            </button>
           </p>
         </div>
         <section style={{ maxWidth: "720px", margin: "0 auto", textAlign: "center" }}>
