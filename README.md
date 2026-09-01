@@ -1,60 +1,58 @@
-# Asiinet 🔌
+# Asiinet Project 🔌
 
-Proyecto fullstack moderno con arquitectura escalable basada en **Node.js + Express + TypeScript** para el backend y **React + Vite** para el frontend.
-
-> Anteriormente conocido como **PlugIn**.
+Proyecto fullstack con una arquitectura modular para un sistema de gestión de usuarios y autenticación, desarrollada con **Node.js + Express** en el backend y **React + Vite** en el frontend.
 
 ## 📋 Descripción General
 
-Este es un proyecto monorepo que contiene dos aplicaciones principales:
+Este monorepo incluye dos aplicaciones principales:
 
-- **Backend (API)**: Servidor REST con Express, TypeORM (MySQL), autenticación JWT, hash de contraseñas con Bcrypt y validación con Zod
-- **Frontend**: Aplicación web con React 19, Vite, React Router y Font Awesome
+- **Backend**: API REST desarrollada con Express, TypeScript, TypeORM, JWT y validación con Zod.
+- **Frontend**: Aplicación web en React con Vite, enrutamiento con React Router y estructura de páginas y componentes para la interfaz de usuario.
 
 ## 🏗️ Estructura del Proyecto
 
-```
-Asiinet/
-├── back-asiinet/                # Backend API (Express + TypeORM + JWT)
+```bash
+Asiinet-MAIN/
+├── back-asiinet/                  # Backend API
 │   ├── src/
-│   │   ├── database/
-│   │   │   └── data-source.ts   # Configuración de conexión TypeORM (MySQL)
-│   │   ├── modules/
-│   │   │   └── user/            # Módulo de usuario (entity, repository, service, controller, routes)
-│   │   └── index.ts             # Punto de entrada del servidor
+│   ├── .env
+│   ├── .env_example
 │   ├── package.json
 │   ├── tsconfig.json
-│   ├── .env_example
 │   └── README.md
-├── front-asiinet/                # Frontend (React + Vite)
+├── front-asiinet/                # Frontend app
 │   ├── asiinet/
 │   │   ├── src/
-│   │   │   ├── pages/            # Home, Login, Register, Users
-│   │   │   ├── routes/           # AppRoutes.jsx (React Router)
-│   │   │   ├── components/       # UserList.jsx, etc.
-│   │   │   └── assets/
-│   │   └── package.json
-│   ├── (README-no listo).md
-│   └── README.md
+│   │   ├── public/
+│   │   ├── package.json
+│   │   ├── vite.config.js
+│   │   ├── eslint.config.js
+│   │   └── README.md
+│   └── (README-no listo).md
+├── package-lock.json
 └── README.md                     # Este archivo
 ```
 
-## 🚀 Quick Start
+## 🚀 Inicio Rápido
 
-### Backend (API)
+### Backend
 
 ```bash
 cd back-asiinet
 cp .env_example .env
 npm install
-npm run dev   # con nodemon + tsx (recarga automática)
-# o
-npm start     # ejecución directa con tsx
+npm run dev
 ```
 
-**Puerto por defecto**: `8080` (configurable en `.env`)
+O, si prefieres iniciar directamente:
 
-### Frontend (React)
+```bash
+npm start
+```
+
+**Puerto por defecto**: `8080` (configurable desde `.env`)
+
+### Frontend
 
 ```bash
 cd front-asiinet/asiinet
@@ -67,27 +65,27 @@ npm run dev
 ## 📦 Tecnologías Principales
 
 ### Backend
-- **Express 5** - Framework web minimalista
-- **TypeScript** - Tipado estático (ejecutado con `tsx`)
-- **TypeORM** - ORM para base de datos
-- **MySQL2** - Driver de base de datos MySQL
-- **JWT (jsonwebtoken)** - Autenticación basada en tokens
-- **Bcrypt** - Hash de contraseñas
-- **Zod** - Validación de esquemas
+- **Node.js** - Entorno de ejecución del servidor
+- **Express** - Framework web para APIs
+- **TypeScript** - Tipado estático para JavaScript
+- **TypeORM** - ORM para conexión con bases de datos relacionales
+- **MySQL** - Base de datos principal
+- **JWT** - Autenticación basada en tokens
+- **Zod** - Validación de datos y esquemas
 - **CORS** - Control de acceso entre dominios
-- **Nodemon** - Recarga automática en desarrollo
+- **Nodemon** - Reinicio automático en desarrollo
 
 ### Frontend
-- **React 19** - Librería UI moderna
-- **Vite** - Bundler ultrarrápido
-- **React Router DOM** - Navegación entre rutas
-- **Font Awesome** - Íconos
+- **React 19** - Biblioteca para interfaces de usuario
+- **Vite** - Herramienta rápida de desarrollo y build
+- **React Router DOM** - Enrutamiento de la aplicación
+- **ESLint** - Linting del código
+- **Font Awesome** - Iconografía
+- **CSS modular / estilos básicos** - Personalización visual de la interfaz
 
-## 🔧 Configuración
+## 🔧 Configuración de Variables de Entorno
 
-### Variables de Entorno Backend
-
-Copiar `.env_example` a `.env` y completar:
+Se debe crear un archivo `.env` a partir de `.env_example` dentro de `back-asiinet`.
 
 ```env
 PORT=8080
@@ -103,93 +101,54 @@ JWT_SECRET=1234
 JWT_EXPIRES_IN=1h
 ```
 
-## 🌐 Endpoints Disponibles
-
-### Usuarios (`/api/users`)
-| Método | Ruta                  | Descripción                          |
-|--------|-----------------------|---------------------------------------|
-| POST   | `/api/users/register` | Registra un nuevo usuario             |
-| POST   | `/api/users/login`    | Inicia sesión y devuelve un JWT       |
-
-## 🧭 Rutas del Frontend
-
-| Ruta         | Página     |
-|--------------|------------|
-| `/`          | Login      |
-| `/login`     | Login      |
-| `/register`  | Register   |
-| `/home`      | Home       |
-| `/users`     | Users      |
-
 ## 📖 Documentación
 
-- [Backend Documentation](./back-asiinet/README.md)
-- [Frontend Documentation](./front-asiinet/README.md)
-- [App Vite Documentation](./front-asiinet/asiinet/README.md)
+- [Backend README](./back-asiinet/README.md)
+- [Frontend README](./front-asiinet/asiinet/README.md)
 
-## 🎨 Convenciones de Código
+## 🧩 Funcionalidades
 
-### Variables y Funciones
-```javascript
-const userId = 123;
-function getUserData() { }
-const handleSubmit = () => { };
-```
-
-### Componentes React
-```jsx
-function UserCard() { }
-const LoginForm = () => { };
-```
-
-### Clases CSS
-```css
-.user-card { }
-.login-form { }
-.btn-primary { }
-```
-
-### Modelos/Clases Backend
-```typescript
-class UserModel { }
-class AuthService { }
-```
+- Registro y gestión de usuarios
+- Autenticación con JWT
+- Conexión a base de datos relacional con TypeORM
+- Estructura modular en rutas, servicios y entidades
+- Interfaz de usuario con páginas para autenticación y administración
 
 ## 🔐 Seguridad
 
-- ✅ Autenticación con JWT
-- ✅ Hash de contraseñas con Bcrypt
-- ✅ Validación de entrada con Zod
-- ✅ CORS configurado
+- ✅ Autenticación basada en JWT
+- ✅ Validación de entradas con Zod
+- ✅ CORS habilitado para llamadas HTTP desde el frontend
 - ✅ Variables de entorno protegidas
-
-## 🧪 Testing
-
-### Backend
-```bash
-cd back-asiinet
-npm test
-```
-
-### Frontend
-```bash
-cd front-asiinet/asiinet
-npm test
-```
+- ✅ Uso de contraseñas con hash mediante bcrypt en el backend
 
 ## 📝 Scripts Disponibles
 
 ### Backend
-- `npm start` - Ejecuta el servidor con `tsx`
-- `npm run dev` - Inicia con nodemon + tsx para desarrollo
-- `npm test` - Placeholder de tests (aún no implementado)
+- `npm run dev` - Inicia la API en modo desarrollo con nodemon
+- `npm start` - Ejecuta la aplicación con TypeScript directo
 
 ### Frontend
-- `npm run dev` - Servidor de desarrollo con HMR
-- `npm run build` - Build optimizado para producción
-- `npm run preview` - Previsualiza el build
-- `npm run lint` - Ejecuta ESLint
+- `npm run dev` - Levanta el servidor de desarrollo de Vite
+- `npm run build` - Genera la build de producción
+- `npm run preview` - Previsualiza la aplicación compilada
+- `npm run lint` - Ejecuta ESLint para revisar el código
+
+## 🤝 Contribuir
+
+1. Crear una rama para la funcionalidad: `git checkout -b feature/nombre`
+2. Realizar los cambios y confirmar con commit: `git commit -m "feat: descripción"`
+3. Subir la rama: `git push origin feature/nombre`
+4. Abrir un Pull Request para revisión
+
+## 📄 Licencia
+
+ISC
+
+## 👤 Autor
+
+Tobía - 2026
 
 ---
 
-**Última actualización**: 01 de Septiembre, 2026
+Última actualización: 01 de Septiembre de 2026
