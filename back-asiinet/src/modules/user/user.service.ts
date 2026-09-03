@@ -1,12 +1,13 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import * as userRepository from "./user.repository.js";
+import { AppError } from "../../errors/AppError.js";
 
 
 export const register = async (email: string, password: string, role: string = "user") => {
   //Buscar usuario por email
   const existing = await userRepository.findByEmail(email);
-  if (existing) throw new Error("El usuario ya existe");
+  if (existing) throw AppError.conflict("El usuario ya existe");
 
   const normalizedRole = role === "admin" ? "admin" : "user";
   const passwordHash = await bcrypt.hash(password, 10);
@@ -20,7 +21,7 @@ export const login = async (email: string, password: string) => {
   const user = await userRepository.findByEmail(email);
 
   if (!user) {
-    throw new Error("Credenciales iválidas");
+    throw AppError.unauthorized("Credenciales iválidas");
   }
 
 
@@ -29,14 +30,14 @@ export const login = async (email: string, password: string) => {
 
 
   if (!passwordCompare) {
-    throw new Error("Credenciales iválidas");
+    throw AppError.unauthorized("Credenciales iválidas");
   }
 
 
   // Generar JWT
   const jwtSecret = process.env.JWT_SECRET;
   if (!jwtSecret) {
-    throw new Error("JWT_SECRET no está definido");
+    throw AppError.internal("JWT_SECRET no está definido");
   }
 
   const expiresIn = "1h" as const;
@@ -65,6 +66,3 @@ export const login = async (email: string, password: string) => {
   };
 
 };
-
-
-

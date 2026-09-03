@@ -5,6 +5,8 @@ import express from "express";
 import cors from "cors";
 import { AppDataSource } from "./database/data-source.js";
 import userRoutes from "./modules/user/user.routes.js";
+import { notFoundHandler } from "./middlewares/notFoundHandler.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
 
 const app = express();
 app.use(
@@ -15,6 +17,9 @@ app.use(
 );
 app.use(express.json());
 app.use("/api/users", userRoutes);
+
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 AppDataSource.initialize()
   .then(() => {
