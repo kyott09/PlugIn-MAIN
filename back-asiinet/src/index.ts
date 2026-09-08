@@ -5,8 +5,7 @@ import express from "express";
 import cors from "cors";
 import { AppDataSource } from "./database/data-source.js";
 import userRoutes from "./modules/user/user.routes.js";
-import { notFoundHandler } from "./middlewares/notFoundHandler.js";
-import { errorHandler } from "./middlewares/errorHandler.js";
+import { notFoundHandler, errorHandler } from "./middlewares/errors.js";
 
 const app = express();
 app.use(

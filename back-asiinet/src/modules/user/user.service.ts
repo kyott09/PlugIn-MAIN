@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import * as userRepository from "./user.repository.js";
-import { AppError } from "../../errors/AppError.js";
-
+import { AppError } from "../../middlewares/errors.js";
+  
 
 export const register = async (email: string, password: string, role: string = "user") => {
   //Buscar usuario por email
